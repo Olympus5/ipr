@@ -22,7 +22,7 @@ public class ServeurTCP {
 	 * @param args
 	 */
     public static void main(String[] args) {
-    	int port = 9999;
+    	int port = 10000;
     	ServerSocket ss = null;
     	Socket si = null;
     	
@@ -35,7 +35,7 @@ public class ServeurTCP {
 		    		try {
 						//Create
 						 si = ss.accept();
-						 System.out.println("Handle a client...");
+						 System.out.println("Handle a client..." + si);
 						//Handle
 						traiterSocketCliente(si);
 					} catch (IOException e) {

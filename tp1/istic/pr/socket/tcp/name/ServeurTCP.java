@@ -42,6 +42,7 @@ public class ServeurTCP {
 		    		try {
 						//Create
 						 si = ss.accept();
+						 
 						 System.out.println("Handle a client...");
 						//Handle
 						traiterSocketCliente(si, args[0]);

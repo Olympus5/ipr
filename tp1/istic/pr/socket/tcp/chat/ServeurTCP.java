@@ -1,4 +1,4 @@
-package istic.pr.socket.tcp.thread;
+package istic.pr.socket.tcp.chat;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;

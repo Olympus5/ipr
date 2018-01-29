@@ -23,7 +23,7 @@ public class ClientTCP {
 	 * @param args
 	 */
     public static void main(String[] args) {
-    	int port = 9999;
+    	int port = 10000;
     	Socket s = null;
     	PrintWriter pw = null;
     	BufferedReader br = null;
