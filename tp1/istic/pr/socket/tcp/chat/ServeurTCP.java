@@ -141,8 +141,7 @@ public class ServeurTCP {
 	 * @return The PrintWriter
 	 * @throws IOException GetOutputStream() exception
 	 */
-	public static PrintWriter creerPrinter(Socket socketVersUnClient, String charset) throws
-	IOException {
+	public static PrintWriter creerPrinter(Socket socketVersUnClient, String charset) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socketVersUnClient.getOutputStream(), charset));
 		PrintWriter pw = new PrintWriter(bw);
 		return pw;
