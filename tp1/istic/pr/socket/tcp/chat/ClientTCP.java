@@ -11,24 +11,29 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
- * 
- * @author erwan
- *
+ * Chat Client
+ * @author Erwan IQUEL Mathie LE CLEC'H
+ * @version 5.0
  */
 public class ClientTCP {
-
+	
+	private static int port = 9999;
+	private static Socket s = null;
+	private static Executor service = Executors.newFixedThreadPool(2);
+	
 	/**
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		int port = 9999;
-		Socket s = null;
 		PrintWriter pw = null;
 		BufferedReader br = null;
 		String result = "";
+		Runnable thread = null;
 
 		if(args.length  < 2) {
 			System.err.println("Veuillez entrer un nom et un charset pour votre client");
@@ -46,6 +51,7 @@ public class ClientTCP {
 			//Tant que le mot «fin» n’est pas lu sur le clavier,
 
 			envoyerNom(pw, args[0]);
+			thread = new TraiterUnServeur(br);
 
 			while(!result.equals("FIN")) {
 				//Lire un message au clavier
@@ -53,8 +59,10 @@ public class ClientTCP {
 				//envoyer le message au serveur
 				envoyerMessage(pw, result);
 				//recevoir et afficher la réponse du serveur
-				System.out.println(recevoirMessage(br));
+				service.execute(thread);
 			}
+			
+			((TraiterUnServeur) thread).stop();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -97,8 +105,7 @@ public class ClientTCP {
 	 * @return
 	 * @throws IOException
 	 */
-	public static BufferedReader creerReader(Socket socketVersUnClient, String charset)
-			throws IOException {
+	public static BufferedReader creerReader(Socket socketVersUnClient, String charset) throws IOException {
 		BufferedInputStream bis = new BufferedInputStream(socketVersUnClient.getInputStream());
 		BufferedReader br = new BufferedReader(new InputStreamReader(bis, charset));
 
@@ -111,8 +118,7 @@ public class ClientTCP {
 	 * @return
 	 * @throws IOException
 	 */
-	public static PrintWriter creerPrinter(Socket socketVersUnClient, String charset) throws
-	IOException {
+	public static PrintWriter creerPrinter(Socket socketVersUnClient, String charset) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socketVersUnClient.getOutputStream(), charset));
 		PrintWriter pw = new PrintWriter(bw);
 		return pw;
@@ -124,8 +130,7 @@ public class ClientTCP {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String recevoirMessage(BufferedReader reader) throws
-	IOException {
+	public static String recevoirMessage(BufferedReader reader) throws IOException {
 		return reader.readLine();
 	}
 
@@ -135,8 +140,7 @@ public class ClientTCP {
 	 * @param message
 	 * @throws IOException
 	 */
-	public static void envoyerMessage(PrintWriter p, String message) throws
-	IOException {
+	public static void envoyerMessage(PrintWriter p, String message) throws IOException {
 		p.println(message);
 		p.flush();
 	}
