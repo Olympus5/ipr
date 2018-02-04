@@ -19,7 +19,7 @@ public class ChatServer {
 		try {
 			/*
 			 * Il est possible de créer un registre dynamiquement, cela est avantageux quand nous avons un Serveur
-			 * Qui instanci l'ensemble des méthodes qui vont être distribués:
+			 * Qui instancie l'ensemble des méthodes qui vont être distribués:
 			 
 			 LocateRegistry.createRegistry(1099);
 			 
@@ -31,10 +31,10 @@ public class ChatServer {
 			System.setProperty("java.rmi.codebase", path);
 			
 			// On met en place notre Security Manager
-			/*System.out.println("Mise en place du Security Manager...");
+			System.out.println("Mise en place du Security Manager...");
 			if(System.getSecurityManager() == null) {
 				System.setSecurityManager(new SecurityManager());
-			}*/
+			}
 			
 			// On instancie l'objet qui va être distribué par le serveur
 			ChatRemoteImpl chatRemoteImpl = new ChatRemoteImpl();

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package tp.rmi.client;
 
 import java.net.InetAddress;
@@ -29,9 +26,9 @@ public class ChatClient {
 			System.setProperty("java.rmi.codebase", path);
 			
 			//Mise en place du Security Manager coté client
-			/*if(System.getSecurityManager() == null) {
+			if(System.getSecurityManager() == null) {
 				System.setSecurityManager(new SecurityManager());
-			}*/
+			}
 
 			//On charge la méthodé distribué par notre serveur RMI
 			Remote r = Naming.lookup("rmi://" + InetAddress.getLocalHost().getHostName() + "/ChatRemote");
