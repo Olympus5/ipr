@@ -6,9 +6,9 @@ package tp.rmi.server;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
+import java.nio.file.Paths;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 
 /**
  * @author Erwan IQUEL, Mathieu LE CLEC'H
@@ -25,6 +25,10 @@ public class ChatServer {
 			 
 			 * Plus besoin de lancer dans bin ou de spécifier le codebase pour le registry :)
 			 */
+			
+			String path = Paths.get("bin").toUri().toURL().toString();
+			System.out.println(path);
+			System.setProperty("java.rmi.codebase", path);
 			
 			// On met en place notre Security Manager
 			/*System.out.println("Mise en place du Security Manager...");
