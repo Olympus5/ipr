@@ -8,11 +8,15 @@ import java.rmi.*;
  */
 public interface ChatRemote extends Remote {
 	/**
-	 * 
+	 * Repeat a message
 	 * @param name
 	 * @param message
-	 * @return
+	 * @return The message with the name of the sender
 	 * @throws RemoteException
 	 */
 	public String echo(String name, String message) throws RemoteException;
+	
+	public void send(String name, String message) throws RemoteException;
+	
+	public void registerCallback(ReceiveCallback callback) throws RemoteException;
 }

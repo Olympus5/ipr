@@ -13,13 +13,13 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import tp.rmi.common.ChatRemote;
+import tp.rmi.common.ReceiveCallback;
 
 /**
  * @author Erwan IQUEL, Mathieu LE CLEC'H
  * @version 1.0
  */
 public class ChatClient {
-
 	/**
 	 * @param args
 	 */
@@ -30,8 +30,10 @@ public class ChatClient {
 		}
 		
 		try {
+			//Mise en place du codebase
 			String path = Paths.get("bin").toUri().toURL().toString();
-			System.setProperty("java.rmi.codebase", path);
+			//System.setProperty("java.rmi.server.codebase", path);
+			System.setProperty("java.rmi.server.useCodebaseOnly", "false");
 			
 			//Mise en place du Security Manager coté client
 			if(System.getSecurityManager() == null) {
@@ -45,9 +47,12 @@ public class ChatClient {
 			if(r instanceof ChatRemote) {
 				String message = "";
 				
+				ReceiveCallback callback = new ReceiveCallbackImpl(); 
+				((ChatRemote) r).registerCallback(callback);
+				
 				while(!message.equals("FIN")) {
 					message = lireMessageAuClavier();
-					System.out.println(((ChatRemote) r).echo(args[0], message));
+					((ChatRemote) r).send(args[0], message);
 				}
 				System.out.println(((ChatRemote) r).echo("moi", "test"));
 			} else {
@@ -62,7 +67,6 @@ public class ChatClient {
 		} catch (NotBoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

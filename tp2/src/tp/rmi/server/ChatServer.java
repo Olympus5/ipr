@@ -28,7 +28,7 @@ public class ChatServer {
 			
 			String path = Paths.get("bin").toUri().toURL().toString();
 			System.out.println(path);
-			System.setProperty("java.rmi.codebase", path);
+			System.setProperty("java.rmi.server.codebase", path);
 			
 			// On met en place notre Security Manager
 			System.out.println("Mise en place du Security Manager...");
