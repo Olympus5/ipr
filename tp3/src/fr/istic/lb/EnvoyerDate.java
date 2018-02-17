@@ -32,12 +32,12 @@ public class EnvoyerDate {
 			boolean durable = true;
 			channel.queueDeclare(QUEUE_NAME, durable, false, false, null);
 
-			while(!stop) {
-				String message = getDate();
+			//while(!stop) {
+			String message = getDate();
 
-				channel.basicPublish("", QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes("UTF-8"));
-				System.out.println(" [x] Sent '" + message + "'"); 	
-			}
+			channel.basicPublish("", QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes("UTF-8"));
+			System.out.println(" [x] Sent '" + message + "'"); 	
+			//}
 		} catch (KeyManagementException e) {
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {

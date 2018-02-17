@@ -19,7 +19,7 @@ public class RecevoirDate {
 		try {
 			factory.setUri("amqp://lyfxesxf:aPjKUUBJuBdBcgqCeDg9z5O5Ptkt117Q@sheep.rmq.cloudamqp.com/lyfxesxf");
 			connection = factory.newConnection();
-			channel = connection.createChannel();
+			final Channel chan = channel = connection.createChannel();
 
 			boolean durable = true;
 			channel.queueDeclare(QUEUE_NAME, durable, false, false, null);
@@ -36,7 +36,7 @@ public class RecevoirDate {
 					String message = new String(body, "UTF-8");
 
 					System.out.println(" [x] Received '" + message + "'");
-					this.getChannel().basicAck(envelope.getDeliveryTag(), false);
+					chan.basicAck(envelope.getDeliveryTag(), false);
 				}
 			};
 

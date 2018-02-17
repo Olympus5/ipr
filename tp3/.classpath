@@ -5,8 +5,8 @@
 	<classpathentry kind="lib" path="/home/erwan/Cours/m1/ipr/rabbitmq-java-client-bin-3.2.3/commons-io-1.2.jar"/>
 	<classpathentry kind="lib" path="/home/erwan/Cours/m1/ipr/rabbitmq-java-client-bin-3.2.3/junit.jar"/>
 	<classpathentry kind="lib" path="/home/erwan/Cours/m1/ipr/rabbitmq-java-client-bin-3.2.3/commons-cli-1.1.jar"/>
-	<classpathentry kind="lib" path="/home/erwan/Cours/m1/ipr/amqp-client-5.1.2.jar"/>
-	<classpathentry kind="lib" path="/home/erwan/Cours/m1/ipr/slf4j-api-1.7.21.jar"/>
-	<classpathentry kind="lib" path="/home/erwan/Cours/m1/ipr/slf4j-simple-1.7.22.jar"/>
+	<classpathentry kind="lib" path="/home/erwan/myjar/amqp-client-5.1.2.jar"/>
+	<classpathentry kind="lib" path="/home/erwan/myjar/slf4j-api-1.7.21.jar"/>
+	<classpathentry kind="lib" path="/home/erwan/myjar/slf4j-simple-1.7.22.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
