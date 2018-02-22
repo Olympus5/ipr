@@ -8,9 +8,9 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 
-public class RecevoirDate {
+public class RecevoirDateUTC {
   private static final String EXCHANGE_NAME = "date_route";
-  private static final String LOCAL_KEY = "local";
+  private static final String UTC_KEY = "utc";
 
   public static void main(String[] argv) {
     ConnectionFactory factory = new ConnectionFactory();
@@ -21,11 +21,11 @@ public class RecevoirDate {
 		factory.setUri("amqp://lyfxesxf:aPjKUUBJuBdBcgqCeDg9z5O5Ptkt117Q@sheep.rmq.cloudamqp.com/lyfxesxf");
 		
 	    connection = factory.newConnection();
-	    final Channel chan = channel = connection.createChannel();
+	    channel = connection.createChannel();
 
 	    channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
 	    String queueName = channel.queueDeclare().getQueue();
-	    channel.queueBind(queueName, EXCHANGE_NAME, LOCAL_KEY);
+	    channel.queueBind(queueName, EXCHANGE_NAME, UTC_KEY);
 	    
 	    System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 

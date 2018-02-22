@@ -17,27 +17,32 @@ import com.rabbitmq.client.Channel;
 public class EnvoyerDate {
 
 	private static final String EXCHANGE_NAME = "date_route";
+	private static final String LOCAL_KEY = "local";
+	private static final String UTC_KEY = "utc";
 
 	public static void main(String[] argv) {
 		ConnectionFactory factory = new ConnectionFactory();
 		Connection connection = null;
 		Channel channel = null;
-		
+
 		try {
 			factory.setUri("amqp://lyfxesxf:aPjKUUBJuBdBcgqCeDg9z5O5Ptkt117Q@sheep.rmq.cloudamqp.com/lyfxesxf");
-			
+
 			connection = factory.newConnection();
 			channel = connection.createChannel();
 			boolean stop = false;
 
 			channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
 
-			while(!stop) {
-				String message = getDate();
+			String date = getDate();
+			String dateUTC = getDateUTC();
 
-				channel.basicPublish(EXCHANGE_NAME, "", null, message.getBytes("UTF-8"));
-				System.out.println(" [x] Sent '" + message + "'");
-			}
+			channel.basicPublish(EXCHANGE_NAME, LOCAL_KEY, null, date.getBytes("UTF-8"));
+			System.out.println(" [x] Sent '" + date + "'");
+			
+
+			channel.basicPublish(EXCHANGE_NAME, UTC_KEY, null, dateUTC.getBytes("UTF-8"));
+			System.out.println(" [x] Sent '" + dateUTC + "'");
 		} catch (KeyManagementException e) {
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
@@ -53,7 +58,7 @@ public class EnvoyerDate {
 				if(channel != null) {
 					channel.close();
 				}
-				
+
 				if(connection != null) {
 					connection.close();
 				}
@@ -62,14 +67,14 @@ public class EnvoyerDate {
 			} catch (TimeoutException e) {
 				e.printStackTrace();
 			}
-		
+
 		}
 	}
 
 	private static String getDate(){
 		return LocalDateTime.now().toString();
 	}
-	
+
 	private static String getDateUTC() {
 		return LocalDateTime.now(Clock.systemUTC()).toString();
 	}
