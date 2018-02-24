@@ -1,7 +1,7 @@
 package fr.istic.ipr.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,35 +17,11 @@ public class Chat extends HttpServlet {
     public Chat() {
         super();
     }
-    
-    public void init() throws ServletException {
-    	buffer.append("Bienvenue dans le chat <br />");
-    	buffer.append("Soyez polis <br />");
-    }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
+		request.setAttribute("content", buffer);
 		
-		PrintWriter out = response.getWriter();
-		
-		out.println("<!DOCTYPE html>");
-		out.println("<html>");
-		out.println("<head>");
-		out.println("<meta charset=\"utf-8\" />");
-		out.println("<title>Chat</title>");
-		out.println("</head>");
-		out.println("<body>");
-		out.println("<form method=\"post\" action=\"Chat\">");
-		out.println("<input type=\"text\" name=\"message\" id=\"message\" required autofocus />");
-		out.println("<input type=\"submit\" name=\"action\" value=\"submit\"/>");
-		out.println("<input type=\"submit\" name=\"action\" value=\"refresh\"/>");
-		out.println("</form>");
-		out.println("<p>");
-		out.println(buffer.toString());
-		out.println("</p>");
-		out.println("</body>");
-		out.println("</html>");
+		this.getServletContext().getRequestDispatcher("/WEB-INF/chat.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,7 +29,7 @@ public class Chat extends HttpServlet {
 		String message = request.getParameter("message");
 		
 		if("submit".equals(action)) {
-			buffer.append(message + "<br />");
+			buffer.append("(" + LocalDateTime.now() + ") " + message + "<br />");
 		}
 		
 		doGet(request, response);
