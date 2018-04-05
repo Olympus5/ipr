@@ -14,4 +14,16 @@
 		<servlet-name>Chat</servlet-name>
 		<url-pattern>/chat</url-pattern>
 	</servlet-mapping>
+	
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<include-prelude>/WEB-INF/taglibs.jsp</include-prelude>
+		</jsp-property-group>
+	</jsp-config>
+	
+	<context-param>
+		<param-name>welcome</param-name>
+		<param-value>Bienvenue sur le chat. Soyez polis.</param-value>
+	</context-param>
 </web-app>
